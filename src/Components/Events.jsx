@@ -1,6 +1,7 @@
 import React from 'react'
 import events from '../data/events.json';
 import Event from './Event';
+import { Outlet } from 'react-router-dom';
 function Events() {
 
   return (
@@ -8,6 +9,7 @@ function Events() {
        
             {events.map((item, index) => (
             <Event key={index} event={item} />
+          
             ))}
        
     </div>

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Card ,Alert } from 'react-bootstrap';
+import { Card ,Alert, NavLink } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import eventimage from  '../assets/event.jpg';
 import soldout from '../assets/sold_out.jpg';
+import { Link } from 'react-router-dom';
 function Event({ event }) {
     const [eventData, setEventData] = useState(event);
     const [showAlert, setShowAlert] = useState(false);
@@ -54,7 +55,7 @@ function Event({ event }) {
       <Card style={{ width: '18rem' }}>
         <Card.Img variant="top" src={event.nbTickets == 0 ? soldout : eventimage} />
         <Card.Body>
-          <Card.Title>{eventData.name}</Card.Title>
+          <Card.Title><Link to={`/events/details/${event.id}`}>{event.name}</Link></Card.Title>
           <div>
             <p>Price: {eventData.price}</p>
             <p>Number of tickets: {eventData.nbTickets}</p>
