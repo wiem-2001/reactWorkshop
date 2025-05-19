@@ -7,7 +7,8 @@ import ListManager from './Components/ListManager'
 import ColorBox from './Components/ColorBox'
 import Evaluation from './Components/evaluation'
 import TodoList from './Components/TodoList'
-
+import Event from './Components/Event'
+import Events from './Components/Events'
 function App() {
   const [count, setCount] = useState(0)
 
@@ -34,7 +35,7 @@ function App() {
        rendering the todo list component to try props and state
       </p>
     <TodoList initialTasks={[{ name: "Finish project", priority: "High" }, { name: "Read book", priority: "Low" }]} />
-
+    <Events />
     </>
   )
 }
