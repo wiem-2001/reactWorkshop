@@ -4,12 +4,15 @@ import Button from 'react-bootstrap/Button';
 import eventimage from  '../assets/event.jpg';
 import soldout from '../assets/sold_out.jpg';
 import { Link } from 'react-router-dom';
-function Event({ event }) {
+import { useNavigate } from 'react-router-dom';
+import {deleteEvent} from '../service/api';
+function Event({ event ,onDelete }) {
     const [eventData, setEventData] = useState(event);
     const [showAlert, setShowAlert] = useState(false);
     const [alertMsg, setAlertMsg] = useState('');
     const [Like, setLike] = useState('❤️');
     const [alertVariant, setAlertVariant] = useState('success');
+    const navigate = useNavigate();
     const incrementParticipants = () => {
         if(eventData.nbTickets > 0) {
             setEventData((eventData) => ({
@@ -29,6 +32,7 @@ function Event({ event }) {
         setTimeout(() => setShowAlert(false), 2000);
     }
     useEffect(() => {
+        
         if(eventData.nbTickets === 0) {
         setEventData(event);
         }
@@ -44,6 +48,24 @@ function Event({ event }) {
         setShowAlert(true);
         setTimeout(() => setShowAlert(false), 2000);
     }
+   const handleDelete = async () => {
+    try {
+      const res = await deleteEvent(event.id);
+      if (res.status === 200) {
+        onDelete(event.id);  // Notify parent to update events list
+        setAlertMsg(`You have successfully deleted ${event.name}.`);
+        setAlertVariant("danger");
+        setShowAlert(true);
+        setTimeout(() => setShowAlert(false), 2000);
+      }
+    } catch (error) {
+      console.error("Error deleting event:", error);
+      setAlertMsg("Failed to delete the event.");
+      setAlertVariant("danger");
+      setShowAlert(true);
+      setTimeout(() => setShowAlert(false), 2000);
+    }
+  };
   return (
     
     <div>
@@ -63,6 +85,8 @@ function Event({ event }) {
           </div>
           <Button variant="primary" onClick={() => incrementParticipants()} disabled={event.nbTickets ===0}>Book an event</Button>
           <Button variant="secondary" onClick={() => handleLike(event)}>{Like}</Button>
+           <button onClick={() => navigate(`/events/updateEvent/${eventData.id}`)} >update Event</button>
+           <button onClick={() => handleDelete(eventData.id)} >delete Event</button>
         </Card.Body>
       </Card>
     </div>

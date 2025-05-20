@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import React, { Suspense, lazy } from 'react';
+import { Routes, Route } from 'react-router-dom'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -9,15 +11,17 @@ import Evaluation from './Components/evaluation'
 import TodoList from './Components/TodoList'
 import Event from './Components/Event'
 import { BrowserRouter } from 'react-router-dom'
-import { Routes, Route } from 'react-router-dom'
+
 import NotFound from './Components/NotFound'
 import NavigationBar from './Components/NavigatorBar'
 const Home = React.lazy(() => import ('./Components/Home'))
 const Events = React.lazy(() => import ('./Components/Events'))
 const EventDetails = React.lazy(() => import ('./Components/EventDetails'))
 import ReactNavBar from './Components/ReactNavBar'
+import AddEvent from './Components/AddEvent';
+import UpdateEvent from './Components/UpdateEvent';
 
-import React, { Suspense, lazy } from 'react';
+
 function App() {
   const [count, setCount] = useState(0)
 
@@ -62,6 +66,8 @@ function App() {
   <Route path="/" element={<Home />} />
   <Route path="/events" element={<Events />} />
   <Route path="/events/details/:id" element={<EventDetails />} /> {/* NOT nested */}
+  <Route path="/events/addEvent" element={<AddEvent />} />
+  <Route path="/events/updateEvent/:id" element={<UpdateEvent />} />
   <Route path="*" element={<h2>404 - Page not found</h2>} />
   </Routes>
     </Suspense> 

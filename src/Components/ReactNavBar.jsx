@@ -23,6 +23,11 @@ function ReactNavBar() {
                 textDecoration: isActive ? 'underline' : 'none',
               })}> Events</NavLink>
           </Nav>
+           <NavLink to="/events/addEvent"style={({ isActive }) => ({
+                color: 'white',
+                textDecoration: isActive ? 'underline' : 'none',
+              })}> Add new Event</NavLink>
+         
         </Navbar.Collapse>
       </Container>
     </Navbar>
