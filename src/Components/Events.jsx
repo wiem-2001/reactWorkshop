@@ -3,34 +3,38 @@ import Event from './Event';
 import { getEvents } from '../service/api';
 import { useNavigate } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
-
+import useEventStore from '../ZustandStore/useEventStore'
 function Events() {
-  const [events, setEvents] = useState([]);
+ // const [events, setEvents] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
-
-  const fetchEvents = async () => {
-    try {
-      const data = await getEvents();
-      setEvents(data); 
-    } catch (error) {
-      console.error('Error fetching events:', error);
-    }
-  };
+  const {events, fetchEvents , deleteEvent} = useEventStore();
+  // const fetchEvents = async () => {
+  //   try {
+  //     const data = await getEvents();
+  //     setEvents(data); 
+  //   } catch (error) {
+  //     console.error('Error fetching events:', error);
+  //   }
+  // };
 
   useEffect(() => {
     fetchEvents();
   }, []);
 
-  const handleDelete = (deletedEventId) => {
-    setEvents((prevEvents) =>
-      prevEvents.filter((event) => event.id !== deletedEventId)
-    );
+  // const handleDelete = (deletedEventId) => {
+  //   setEvents((prevEvents) =>
+  //     prevEvents.filter((event) => event.id !== deletedEventId)
+  //   );
+  // };
+  const handleDelete = async (eventId) => {
+  
+    deleteEvent(eventId);
+    
   };
-
-  const filteredEvents = events.filter((event) =>
-    event.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // const filteredEvents = events.filter((event) =>
+  //   event.name.toLowerCase().includes(searchTerm.toLowerCase())
+  // );
 
   return (
     <div className="justify-content-center d-flex flex-column align-items-center gap-3 mt-5">
@@ -49,13 +53,11 @@ function Events() {
       </Form>
 
       <div className="d-flex flex-wrap justify-content-center gap-3">
-        {filteredEvents.length > 0 ? (
-          filteredEvents.map((item) => (
-            <Event key={item.id} event={item} onDelete={handleDelete} />
+        {
+          events.map((item,index) => (
+            <Event key={index} event={item} onDelete={handleDelete} />
           ))
-        ) : (
-          <p>No events found.</p>
-        )}
+        }
       </div>
 
       <div className="mt-5">

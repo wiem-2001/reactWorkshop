@@ -60,7 +60,7 @@ function Event({ event ,onDelete }) {
       }
     } catch (error) {
       console.error("Error deleting event:", error);
-      setAlertMsg("Failed to delete the event.");
+        
       setAlertVariant("danger");
       setShowAlert(true);
       setTimeout(() => setShowAlert(false), 2000);

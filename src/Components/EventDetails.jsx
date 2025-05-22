@@ -5,6 +5,7 @@ import { Card, Button, Container } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import {getEventDetails} from "../service/api";
 import Alert from 'react-bootstrap/Alert';
+import { useState , useEffect } from 'react';
 function EventDetails() {
    const { id } = useParams();
    const [event, setEvent] = useState(null);
